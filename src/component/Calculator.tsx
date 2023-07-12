@@ -116,7 +116,7 @@ const OptionTaxCalculator = () => {
         </div>
 
         <div>
-          <p>Your company's per share value (FMV)</p>
+          <p>Your company&apos;s per share value (FMV)</p>
           <input
             // type="number"
             value={valuePerShare}
