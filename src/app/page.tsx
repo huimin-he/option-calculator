@@ -6,6 +6,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col justify-between p-4 sm:p-14 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center">
         <OptionTaxCalculator />
+        <div className="sm:py-10"></div>
         <SEOArticle />
       </div>
     </main>
