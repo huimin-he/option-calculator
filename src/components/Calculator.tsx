@@ -4,14 +4,14 @@ import React, { useState } from "react";
 import { Bar } from "react-chartjs-2";
 // import { CategoryScale, Chart } from "chart.js";
 
-import { Chart, registerables } from "chart.js";
+import { Chart, Legend, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
 const OptionTaxCalculator = () => {
   const [optionType, setOptionType] = useState("");
   const [quantity, setQuantity] = useState(0);
-  const [income, setIncome] = useState(0);
+  const [income, setIncome] = useState(100000);
   const [valuePerShare, setValuePerShare] = useState(0);
   const [filingStatus, setFilingStatus] = useState("Single");
   const [exerciseDate, setExerciseDate] = useState("");
@@ -60,6 +60,7 @@ const OptionTaxCalculator = () => {
     labels: ["Exercise cost", "Today’s tax", "End of year tax"],
     datasets: [
       {
+        label: "Tax",
         data: [exerciseCost, todayTax, endOfYearTax],
       },
     ],
