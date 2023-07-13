@@ -12,10 +12,10 @@ export default function NavBar() {
             <img
               src="https://flowbite.com/docs/images/logo.svg"
               className="h-8 mr-3"
-              alt="Flowbite Logo"
+              alt="CozyCoffer Logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              Flowbite
+              CozyCoffer
             </span>
           </a>
           <button

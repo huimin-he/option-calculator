@@ -157,7 +157,7 @@ const OptionTaxCalculator = () => {
           </div>
           <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
             <p className="text-gray-700">
-              Estimated AMT at the end of the calendar year:
+              Additional AMT at the end of the calendar year:
             </p>
             <p className="font-bold">${formatCurrency(additionalTax)} USD</p>
           </div>
@@ -219,7 +219,7 @@ const OptionTaxCalculator = () => {
             htmlFor="default-input"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Per share strike price ( exercise )
+            Strike Price in USD (Exercise Cost)
           </label>
           <input
             type="number"
