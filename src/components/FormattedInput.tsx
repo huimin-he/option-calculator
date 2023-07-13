@@ -4,7 +4,6 @@ interface FormattedNumberInputProps {
   value: string;
   onValueChange: (value: string) => void;
   className?: string;
-  // add any other props you need
 }
 
 const FormattedNumberInput: React.FC<FormattedNumberInputProps> = ({
@@ -16,13 +15,13 @@ const FormattedNumberInput: React.FC<FormattedNumberInputProps> = ({
     const input = e.target.value;
     const noCommas = input.replace(/,/g, "");
 
-    // Test if the new input includes only digits
-    const regex = /^[0-9]+$/;
+    // Test if the new input includes only digits or a single decimal point
+    const regex = /^[0-9]*\.?[0-9]*$/;
     if (input === "" || regex.test(noCommas)) {
       let formattedInput = noCommas;
 
-      // Only parse and format if not empty
-      if (noCommas !== "") {
+      // Only parse and format if not empty and no decimal point
+      if (noCommas !== "" && !noCommas.includes(".")) {
         formattedInput = new Intl.NumberFormat().format(parseInt(noCommas));
       }
 

@@ -33,7 +33,7 @@ const SEOArticle = () => (
       </li>
     </ul>
 
-    <h2>2. AMT Calculation Steps</h2>
+    <h2>2. AMT Calculation Steps using 2023 numbers</h2>
     <p>
       In the OptionTaxCalculator tool, we take the following steps to calculate
       the potential additional Alternative Minimum Tax (AMT) one might owe when
@@ -55,8 +55,8 @@ const SEOArticle = () => (
 
       <li>
         Depending on your tax filing status (single or married), an{" "}
-        <strong>AMT exemption</strong> amount is determined. For the year 2021,
-        the exemption was $72,900 for single filers and $113,400 for married
+        <strong>AMT exemption</strong> amount is determined. For the year 2023,
+        the exemption was $81,300 for single filers and $126,500 for married
         filers.
       </li>
 
@@ -68,7 +68,7 @@ const SEOArticle = () => (
       <li>
         If the AMTI is more than zero, we apply the relevant{" "}
         <strong>AMT rates</strong> to calculate the AMT tax. If the AMTI is up
-        to $197,900, a rate of 26% is applied. Any amount above $197,900 is
+        to $220,700, a rate of 26% is applied. Any amount above $197,900 is
         taxed at 28%.
       </li>
 
@@ -81,7 +81,7 @@ const SEOArticle = () => (
 
     <p>
       Please note that the specific numbers (AMT exemption, AMT rates, etc.) are
-      for the year 2021 and should be updated as needed for other tax years.
+      for the year 2023 and should be updated as needed for other tax years.
     </p>
 
     <h2>3. Benefits of Yearly Exercising</h2>

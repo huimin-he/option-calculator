@@ -59,11 +59,11 @@ const OptionTaxCalculator = () => {
   };
 
   // TODO: implement the logic for tax calculations based on the inputs
-  const AMT_EXEMPTION_SINGLE = 72900; // 2021 figure, update as needed
-  const AMT_EXEMPTION_MARRIED = 113400; // 2021 figure, update as needed
+  const AMT_EXEMPTION_SINGLE = 81300; // 2023 figure, update as needed
+  const AMT_EXEMPTION_MARRIED = 126500; // 2023 figure, update as needed
   const AMT_RATE1 = 0.26; // 26% up to AMT income of $197,900 for 2021
   const AMT_RATE2 = 0.28; // 28% over $197,900 AMT income for 2021
-  const AMT_RATE1_MAX = 197900; // for 2021, update as needed
+  const AMT_RATE1_MAX = 220700; // for 2021, update as needed
 
   // ... rest of OptionTaxCalculator component ...
 
@@ -95,10 +95,15 @@ const OptionTaxCalculator = () => {
   let todayTax = 0;
 
   // For simplicity, let's assume end of year tax is the same as today's tax
-  let regularTax =
-    strToNumber(income) * getRegularTaxRate(strToNumber(income), filingStatus);
+  let regularTax = getRegularTax(strToNumber(income), filingStatus);
   let endOfYearTax = Math.max(regularTax, amtTax); // this is likely an oversimplification
   let additionalTax = Math.max(endOfYearTax - regularTax, 0);
+
+  console.log("preferenceItem", preferenceItem);
+  console.log("amtExemption", amtExemption);
+  console.log("amti", amti);
+  console.log("amtTax", amtTax);
+  console.log("regularTax", regularTax);
 
   const options = {
     scales: {
@@ -140,7 +145,7 @@ const OptionTaxCalculator = () => {
   return (
     <div className="sm:w-1/2">
       <div className="text-3xl font-bold mt-4 px-4 my-4">
-        Option Exercise Tax Estimate
+        Option Exercise Tax Estimate for year 2023
       </div>
       <section className="flex flex-col sm:flex-row">
         <div className="flex w-full">
@@ -287,35 +292,40 @@ const OptionTaxCalculator = () => {
   );
 };
 
-interface TaxBracket {
+type TaxBracket = {
   rate: number;
   income: number;
-}
+};
 
-interface TaxBrackets {
-  [key: string]: TaxBracket[];
-}
+type TaxBrackets = {
+  [filingStatus: string]: TaxBracket[];
+};
 
-function getRegularTaxRate(income: number, filingStatus: string): number {
+function getRegularTax(income: number, filingStatus: string): number {
   const taxBrackets: TaxBrackets = {
     Single: [
-      { rate: 0.1, income: 9950 },
-      { rate: 0.12, income: 40525 },
-      { rate: 0.22, income: 86375 },
-      { rate: 0.24, income: 164925 },
-      { rate: 0.32, income: 209425 },
-      { rate: 0.35, income: 523600 },
+      { rate: 0.1, income: 11000 },
+      { rate: 0.12, income: 44725 },
+      { rate: 0.22, income: 95375 },
+      { rate: 0.24, income: 182100 },
+      { rate: 0.32, income: 231250 },
+      { rate: 0.35, income: 578125 },
       { rate: 0.37, income: Infinity },
     ],
     Married: [
-      { rate: 0.1, income: 19900 },
-      { rate: 0.12, income: 81050 },
-      { rate: 0.22, income: 172750 },
-      { rate: 0.24, income: 329850 },
-      { rate: 0.32, income: 418850 },
-      { rate: 0.35, income: 628300 },
+      { rate: 0.1, income: 22000 },
+      { rate: 0.12, income: 89450 },
+      { rate: 0.22, income: 190750 },
+      { rate: 0.24, income: 364200 },
+      { rate: 0.32, income: 462500 },
+      { rate: 0.35, income: 693750 },
       { rate: 0.37, income: Infinity },
     ],
+  };
+
+  const standardDeductions: Record<string, number> = {
+    Single: 13850,
+    Married: 27700,
   };
 
   const brackets: TaxBracket[] = taxBrackets[filingStatus];
@@ -324,9 +334,18 @@ function getRegularTaxRate(income: number, filingStatus: string): number {
     throw new Error(`Unknown filing status: ${filingStatus}`);
   }
 
+  let tax = 0;
+  let taxableIncome = income - standardDeductions[filingStatus];
+
+  let lastBracketIncome = 0;
+
   for (let bracket of brackets) {
-    if (income <= bracket.income) {
-      return bracket.rate;
+    if (taxableIncome <= bracket.income) {
+      tax += (taxableIncome - lastBracketIncome) * bracket.rate;
+      return tax;
+    } else {
+      tax += (bracket.income - lastBracketIncome) * bracket.rate;
+      lastBracketIncome = bracket.income;
     }
   }
 
