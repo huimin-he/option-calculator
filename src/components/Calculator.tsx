@@ -12,8 +12,8 @@ const OptionTaxCalculator = () => {
   const [optionType, setOptionType] = useState("ISO");
   const [quantity, setQuantity] = useState("10,000");
   const [income, setIncome] = useState("150,000");
-  const [strikePrice, setStrikePrice] = useState(5);
-  const [valuePerShare, setValuePerShare] = useState(20);
+  const [strikePrice, setStrikePrice] = useState("5");
+  const [valuePerShare, setValuePerShare] = useState("20");
   const [filingStatus, setFilingStatus] = useState("Single");
   const date = new Date();
   const day = String(date.getDate()).padStart(2, "0");
@@ -68,10 +68,12 @@ const OptionTaxCalculator = () => {
   // ... rest of OptionTaxCalculator component ...
 
   // TODO: implement the logic for tax calculations based on the inputs
-  const exerciseCost = strToNumber(quantity) * strikePrice;
+  const exerciseCost = strToNumber(quantity) * strToNumber(strikePrice);
 
   // The cost is the "preference item" for AMT calculation
-  let preferenceItem = strToNumber(quantity) * (valuePerShare - strikePrice);
+  let preferenceItem =
+    strToNumber(quantity) *
+    (strToNumber(valuePerShare) - strToNumber(strikePrice));
 
   let amtExemption =
     filingStatus === "Single" ? AMT_EXEMPTION_SINGLE : AMT_EXEMPTION_MARRIED;
@@ -221,11 +223,12 @@ const OptionTaxCalculator = () => {
           >
             Strike Price in USD (Exercise Cost)
           </label>
-          <input
-            type="number"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          <FormattedNumberInput
             value={strikePrice}
-            onChange={(e) => setStrikePrice(Number(e.target.value))}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            onValueChange={function (value: string): void {
+              setStrikePrice(value);
+            }}
           />
         </div>
 
@@ -236,11 +239,12 @@ const OptionTaxCalculator = () => {
           >
             Your company&apos;s per share value (FMV)
           </label>
-          <input
-            type="number"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          <FormattedNumberInput
             value={valuePerShare}
-            onChange={(e) => setValuePerShare(Number(e.target.value))}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            onValueChange={function (value: string): void {
+              setValuePerShare(value);
+            }}
           />
         </div>
 
