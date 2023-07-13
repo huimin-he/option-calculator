@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Bar } from "react-chartjs-2";
 // import { CategoryScale, Chart } from "chart.js";
-import { Chart, Legend, registerables } from "chart.js";
+import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
@@ -96,6 +96,33 @@ const OptionTaxCalculator = () => {
   let endOfYearTax = Math.max(regularTax, amtTax); // this is likely an oversimplification
   let additionalTax = Math.max(endOfYearTax - regularTax, 0);
 
+  const options = {
+    scales: {
+      y: {
+        offset: false, // Enable the offset option
+        ticks: {
+          callback: function (value: number | string) {
+            return `$${formatCurrency(Number(value))}`;
+          },
+          stepSize: 10000,
+          maxTicksLimit: 6,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false, // Hide the legend for this example
+      },
+    },
+    layout: {
+      padding: {
+        top: 20, // Set the top padding to create a margin
+        bottom: 0,
+        right: 20,
+      },
+    },
+  };
+
   const data = {
     labels: ["Exercise cost", "Today’s tax", "End of year tax"],
     datasets: [
@@ -113,7 +140,7 @@ const OptionTaxCalculator = () => {
       </div>
       <section className="flex flex-col sm:flex-row">
         <div className="flex w-full">
-          <Bar data={data} />
+          <Bar data={data} options={options} />
         </div>
         <div className="flex flex-col w-full sm:w-1/3">
           <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
