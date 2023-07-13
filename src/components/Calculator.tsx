@@ -72,14 +72,17 @@ const OptionTaxCalculator = () => {
 
   return (
     <div>
+      <div className="text-2xl sm:text-3xl font-bold px-4 mb-10">
+        Option Exercise Tax Estimate
+      </div>
       <section className="flex flex-col sm:flex-row">
-        <div className="w-full sm:w-1/2">
+        <div className="flex w-full">
           <Bar data={data} />
         </div>
-        <div className="flex flex-col w-full sm:w-1/2">
+        <div className="flex flex-col w-full sm:w-1/3">
           <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
-            <p className="text-gray-700">Cost of your option exercise:</p>
-            <p className="font-bold">${formatNumber(exerciseCost)} USD</p>
+            <p className="text-gray-700 font">Cost of your option exercise:</p>
+            <p className="font-bold ">${formatNumber(exerciseCost)} USD</p>
           </div>
           <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
             <p className="text-gray-700">
