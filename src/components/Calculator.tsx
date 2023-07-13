@@ -9,7 +9,7 @@ Chart.register(...registerables);
 
 const OptionTaxCalculator = () => {
   const [optionType, setOptionType] = useState("ISO");
-  const [quantity, setQuantity] = useState(10000);
+  const [quantity, setQuantity] = useState("10,000");
   const [income, setIncome] = useState(150000);
   const [strikePrice, setStrikePrice] = useState(5);
   const [valuePerShare, setValuePerShare] = useState(20);
@@ -20,7 +20,43 @@ const OptionTaxCalculator = () => {
   const year = date.getFullYear();
 
   const [exerciseDate, setExerciseDate] = useState(`${year}-${month}-${day}`);
-  console.log("exerciseDate", exerciseDate);
+
+  // const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const input = e.target.value;
+
+  //   // Remove any existing commas
+  //   const noCommas = input.replace(/,/g, "");
+
+  //   // Test if the new input includes only digits
+  //   const regex = /^[0-9]+$/;
+  //   if (input === "" || regex.test(noCommas)) {
+  //     // Add new commas as thousand separators
+  //     const formattedInput = Number(noCommas).toLocaleString();
+
+  //     // Update the state with the formatted input
+  //     setQuantity(formattedInput);
+  //   }
+  // };
+
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    const noCommas = input.replace(/,/g, "");
+
+    // Test if the new input includes only digits
+    const regex = /^[0-9]+$/;
+    if (input === "" || regex.test(noCommas)) {
+      let formattedInput = noCommas;
+
+      // Only parse and format if not empty
+      if (noCommas !== "") {
+        formattedInput = new Intl.NumberFormat().format(parseInt(noCommas));
+      }
+
+      // Update the state with the formatted input
+      setQuantity(formattedInput);
+    }
+  };
+
   // TODO: implement the logic for tax calculations based on the inputs
   const AMT_EXEMPTION_SINGLE = 72900; // 2021 figure, update as needed
   const AMT_EXEMPTION_MARRIED = 113400; // 2021 figure, update as needed
@@ -31,10 +67,10 @@ const OptionTaxCalculator = () => {
   // ... rest of OptionTaxCalculator component ...
 
   // TODO: implement the logic for tax calculations based on the inputs
-  const exerciseCost = quantity * strikePrice;
+  const exerciseCost = strToNumber(quantity) * strikePrice;
 
   // The cost is the "preference item" for AMT calculation
-  let preferenceItem = quantity * (valuePerShare - strikePrice);
+  let preferenceItem = strToNumber(quantity) * (valuePerShare - strikePrice);
 
   let amtExemption =
     filingStatus === "single" ? AMT_EXEMPTION_SINGLE : AMT_EXEMPTION_MARRIED;
@@ -71,8 +107,8 @@ const OptionTaxCalculator = () => {
   };
 
   return (
-    <div>
-      <div className="text-2xl sm:text-3xl font-bold px-4 mb-10">
+    <div className="sm:w-1/2">
+      <div className="text-3xl font-bold mt-4 px-4 my-4">
         Option Exercise Tax Estimate
       </div>
       <section className="flex flex-col sm:flex-row">
@@ -82,24 +118,24 @@ const OptionTaxCalculator = () => {
         <div className="flex flex-col w-full sm:w-1/3">
           <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
             <p className="text-gray-700 font">Cost of your option exercise:</p>
-            <p className="font-bold ">${formatNumber(exerciseCost)} USD</p>
+            <p className="font-bold ">${formatCurrency(exerciseCost)} USD</p>
           </div>
           <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
             <p className="text-gray-700">
               Taxes withheld on the day of the exercise:
             </p>
-            <p className="font-bold">${formatNumber(todayTax)} USD</p>
+            <p className="font-bold">${formatCurrency(todayTax)} USD</p>
           </div>
           <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
             <p className="text-gray-700">
               Estimated AMT at the end of the calendar year:
             </p>
-            <p className="font-bold">${formatNumber(additionalTax)} USD</p>
+            <p className="font-bold">${formatCurrency(additionalTax)} USD</p>
           </div>
         </div>
       </section>
 
-      <section className="py-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <section className="py-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <label
             htmlFor="default-input"
@@ -127,7 +163,7 @@ const OptionTaxCalculator = () => {
           <input
             // type="number"
             value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
+            onChange={handleQuantityChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
@@ -152,7 +188,7 @@ const OptionTaxCalculator = () => {
             htmlFor="default-input"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Your options&apos;s per share strike price (exercise price)
+            Per share strike price ( exercise )
           </label>
           <input
             type="number"
@@ -264,8 +300,16 @@ function getRegularTaxRate(income: number, filingStatus: string): number {
   return 0;
 }
 
-const formatNumber = (num: number): string => {
+const formatCurrency = (num: number): string => {
   return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 };
+
+function strToNumber(str: string) {
+  // Remove commas from the string
+  const noCommas = str.replace(/,/g, "");
+
+  // Convert the resulting string to a number
+  return Number(noCommas);
+}
 
 export default OptionTaxCalculator;
