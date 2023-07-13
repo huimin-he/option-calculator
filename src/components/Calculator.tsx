@@ -4,13 +4,14 @@ import React, { useState } from "react";
 import { Bar } from "react-chartjs-2";
 // import { CategoryScale, Chart } from "chart.js";
 import { Chart, registerables } from "chart.js";
+import FormattedNumberInput from "./FormattedInput";
 
 Chart.register(...registerables);
 
 const OptionTaxCalculator = () => {
   const [optionType, setOptionType] = useState("ISO");
   const [quantity, setQuantity] = useState("10,000");
-  const [income, setIncome] = useState(150000);
+  const [income, setIncome] = useState("150,000");
   const [strikePrice, setStrikePrice] = useState(5);
   const [valuePerShare, setValuePerShare] = useState(20);
   const [filingStatus, setFilingStatus] = useState("Single");
@@ -73,10 +74,10 @@ const OptionTaxCalculator = () => {
   let preferenceItem = strToNumber(quantity) * (valuePerShare - strikePrice);
 
   let amtExemption =
-    filingStatus === "single" ? AMT_EXEMPTION_SINGLE : AMT_EXEMPTION_MARRIED;
+    filingStatus === "Single" ? AMT_EXEMPTION_SINGLE : AMT_EXEMPTION_MARRIED;
 
   // Compute AMT Taxable Income (AMTI)
-  let amti = income + preferenceItem - amtExemption;
+  let amti = strToNumber(income) + preferenceItem - amtExemption;
 
   // AMT tax is the larger of AMT_RATE1 or AMT_RATE2 applied to the AMTI
   let amtTax = 0;
@@ -92,7 +93,8 @@ const OptionTaxCalculator = () => {
   let todayTax = 0;
 
   // For simplicity, let's assume end of year tax is the same as today's tax
-  let regularTax = income * getRegularTaxRate(income, filingStatus);
+  let regularTax =
+    strToNumber(income) * getRegularTaxRate(strToNumber(income), filingStatus);
   let endOfYearTax = Math.max(regularTax, amtTax); // this is likely an oversimplification
   let additionalTax = Math.max(endOfYearTax - regularTax, 0);
 
@@ -187,11 +189,12 @@ const OptionTaxCalculator = () => {
           >
             Exercise quantity:
           </label>
-          <input
-            // type="number"
+          <FormattedNumberInput
             value={quantity}
-            onChange={handleQuantityChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            onValueChange={function (value: string): void {
+              setQuantity(value);
+            }}
           />
         </div>
 
@@ -202,11 +205,12 @@ const OptionTaxCalculator = () => {
           >
             What is your taxable income in USD?
           </label>
-          <input
-            // type="number"
+          <FormattedNumberInput
             value={income}
-            onChange={(e) => setIncome(Number(e.target.value))}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            onValueChange={function (value: string): void {
+              setIncome(value);
+            }}
           />
         </div>
 
