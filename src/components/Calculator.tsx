@@ -143,152 +143,165 @@ const OptionTaxCalculator = () => {
   };
 
   return (
-    <div className="sm:w-1/2">
-      <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:px-4 sm:my-4">
+    <>
+      <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:px-4 sm:my-4 items-center justify-center">
         Option Exercise Tax Estimate for year 2023
       </div>
-      <section className="flex flex-col sm:flex-row">
-        <div className="flex w-full">
-          <Bar data={data} options={options} />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:px-10 px-3">
+        <div className="bg-slate-100 px-5">
+          <section className="flex flex-col">
+            <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:my-4">
+              Input
+            </div>
+            <div>
+              <label
+                htmlFor="default-input"
+                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                What is your option type?
+              </label>
+              <select
+                value={optionType}
+                onChange={(e) => setOptionType(e.target.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option value="ISO">ISO</option>
+                {/* <option value="NSO">NSO</option> */}
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="default-input"
+                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                What is your exercise quantity?
+              </label>
+              <FormattedNumberInput
+                value={quantity}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onValueChange={function (value: string): void {
+                  setQuantity(value);
+                }}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="default-input"
+                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                What is your taxable income in USD?
+              </label>
+              <FormattedNumberInput
+                value={income}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onValueChange={function (value: string): void {
+                  setIncome(value);
+                }}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="default-input"
+                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Strike Price in USD (Exercise Cost)
+              </label>
+              <FormattedNumberInput
+                value={strikePrice}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onValueChange={function (value: string): void {
+                  setStrikePrice(value);
+                }}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="default-input"
+                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                {"What is your company's per share value (FMV or 409A)"}
+              </label>
+              <FormattedNumberInput
+                value={valuePerShare}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onValueChange={function (value: string): void {
+                  setValuePerShare(value);
+                }}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="default-input"
+                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                What is your filing status?
+              </label>
+              <select
+                value={filingStatus}
+                onChange={(e) => setFilingStatus(e.target.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+              </select>
+            </div>
+
+            <div>
+              <div className="mb-6">
+                <label
+                  htmlFor="default-input"
+                  className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  When are you planning on exercising?
+                </label>
+                <input
+                  id="default-input"
+                  type="date"
+                  value={exerciseDate}
+                  onChange={(e) => setExerciseDate(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+            </div>
+          </section>
         </div>
-        <div className="flex flex-col w-full pr-4 sm:w-1/3">
-          <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
-            <p className="text-gray-700 font">Cost of your option exercise:</p>
-            <p className="font-bold ">${formatCurrency(exerciseCost)} USD</p>
+
+        <div className="bg-green-100 px-3 py-3">
+          <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:px-2 sm:my-4">
+            Result
           </div>
-          <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
-            <p className="text-gray-700">
-              Taxes withheld on the day of the exercise:
-            </p>
-            <p className="font-bold">${formatCurrency(todayTax)} USD</p>
+          <div className="flex w-full shrink-0">
+            <Bar data={data} options={options} />
           </div>
-          <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
-            <p className="text-gray-700">
-              Additional AMT at the end of the calendar year:
-            </p>
-            <p className="font-bold">${formatCurrency(additionalTax)} USD</p>
+          <div className="flex flex-col sm:w-full pr-4">
+            <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
+              <p className="text-gray-700 font">
+                Cost of your option exercise:
+              </p>
+              <p className="font-bold ">${formatCurrency(exerciseCost)} USD</p>
+            </div>
+            <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
+              <p className="text-gray-700">
+                Taxes withheld on the day of the exercise:
+              </p>
+              <p className="font-bold">${formatCurrency(todayTax)} USD</p>
+            </div>
+            <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
+              <p className="text-gray-700">
+                Additional AMT at the end of the calendar year:
+              </p>
+              <p className="font-bold">${formatCurrency(additionalTax)} USD</p>
+            </div>
           </div>
         </div>
-      </section>
-
-      <section className="py-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div>
-          <label
-            htmlFor="default-input"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            What is your option type?
-          </label>
-          <select
-            value={optionType}
-            onChange={(e) => setOptionType(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option value="ISO">ISO</option>
-            {/* <option value="NSO">NSO</option> */}
-          </select>
-        </div>
-
-        <div>
-          <label
-            htmlFor="default-input"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Exercise quantity:
-          </label>
-          <FormattedNumberInput
-            value={quantity}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onValueChange={function (value: string): void {
-              setQuantity(value);
-            }}
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="default-input"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            What is your taxable income in USD?
-          </label>
-          <FormattedNumberInput
-            value={income}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onValueChange={function (value: string): void {
-              setIncome(value);
-            }}
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="default-input"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Strike Price in USD (Exercise Cost)
-          </label>
-          <FormattedNumberInput
-            value={strikePrice}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onValueChange={function (value: string): void {
-              setStrikePrice(value);
-            }}
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="default-input"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Per share value (FMV or 409A)
-          </label>
-          <FormattedNumberInput
-            value={valuePerShare}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onValueChange={function (value: string): void {
-              setValuePerShare(value);
-            }}
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="default-input"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            What is your filing status?
-          </label>
-          <select
-            value={filingStatus}
-            onChange={(e) => setFilingStatus(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option value="Single">Single</option>
-            <option value="Married">Married</option>
-          </select>
-        </div>
-
-        {/* <div>
-          <div className="mb-6">
-            <label
-              htmlFor="default-input"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              When are you planning on exercising?
-            </label>
-            <input
-              id="default-input"
-              type="date"
-              value={exerciseDate}
-              onChange={(e) => setExerciseDate(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-          </div>
-        </div> */}
-      </section>
-    </div>
+      </div>
+    </>
   );
 };
 
