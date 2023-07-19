@@ -99,11 +99,11 @@ const OptionTaxCalculator = () => {
   let endOfYearTax = Math.max(regularTax, amtTax); // this is likely an oversimplification
   let additionalTax = Math.max(endOfYearTax - regularTax, 0);
 
-  console.log("preferenceItem", preferenceItem);
-  console.log("amtExemption", amtExemption);
-  console.log("amti", amti);
-  console.log("amtTax", amtTax);
-  console.log("regularTax", regularTax);
+  // console.log("preferenceItem", preferenceItem);
+  // console.log("amtExemption", amtExemption);
+  // console.log("amti", amti);
+  // console.log("amtTax", amtTax);
+  // console.log("regularTax", regularTax);
 
   const options = {
     scales: {
@@ -145,21 +145,22 @@ const OptionTaxCalculator = () => {
   return (
     <>
       <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:px-4 sm:my-4 items-center justify-center">
-        Option Exercise Tax Estimate for year 2023
+        FY 2023 Option Tax Estimate
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:px-10 px-3">
-        <div className="bg-slate-100 px-5">
-          <section className="flex flex-col">
+      <div className="grid grid-cols-1 sm:flex gap-4">
+        <div className="bg-slate-100 px-5 py-3 rounded-lg">
+          <section className="space-y-1">
             <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:my-4">
               Input
             </div>
+
             <div>
               <label
                 htmlFor="default-input"
                 className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                What is your option type?
+                Option type and price details
               </label>
               <select
                 value={optionType}
@@ -172,47 +173,18 @@ const OptionTaxCalculator = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="default-input"
-                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                What is your exercise quantity?
-              </label>
               <FormattedNumberInput
                 value={quantity}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                label="Exercise Quantity"
                 onValueChange={function (value: string): void {
                   setQuantity(value);
                 }}
               />
             </div>
-
             <div>
-              <label
-                htmlFor="default-input"
-                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                What is your taxable income in USD?
-              </label>
-              <FormattedNumberInput
-                value={income}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onValueChange={function (value: string): void {
-                  setIncome(value);
-                }}
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="default-input"
-                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Strike Price in USD (Exercise Cost)
-              </label>
               <FormattedNumberInput
                 value={strikePrice}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                label="Strike Price"
                 onValueChange={function (value: string): void {
                   setStrikePrice(value);
                 }}
@@ -220,28 +192,31 @@ const OptionTaxCalculator = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="default-input"
-                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                {"What is your company's per share value (FMV or 409A)"}
-              </label>
               <FormattedNumberInput
                 value={valuePerShare}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                label="Per share value (409A)"
                 onValueChange={function (value: string): void {
                   setValuePerShare(value);
                 }}
               />
             </div>
 
+            <label
+              htmlFor="default-input"
+              className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Personal Details
+            </label>
             <div>
-              <label
-                htmlFor="default-input"
-                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                What is your filing status?
-              </label>
+              <FormattedNumberInput
+                value={income}
+                label="Taxable income"
+                onValueChange={function (value: string): void {
+                  setIncome(value);
+                }}
+              />
+            </div>
+            <div>
               <select
                 value={filingStatus}
                 onChange={(e) => setFilingStatus(e.target.value)}
@@ -258,7 +233,7 @@ const OptionTaxCalculator = () => {
                   htmlFor="default-input"
                   className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  When are you planning on exercising?
+                  {/* Exercising Date */}
                 </label>
                 <input
                   id="default-input"
@@ -272,8 +247,8 @@ const OptionTaxCalculator = () => {
           </section>
         </div>
 
-        <div className="bg-green-100 px-3 py-3">
-          <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:px-2 sm:my-4">
+        <div className="bg-slate-100 px-3 py-3 rounded-lg">
+          <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:my-4">
             Result
           </div>
           <div className="flex w-full shrink-0">

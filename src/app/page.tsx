@@ -3,12 +3,10 @@ import SEOArticle from "@/components/SEOArtichle";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col justify-between p-4 sm:p-14 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center">
-        <OptionTaxCalculator />
-        <div className="sm:py-10"></div>
-        <SEOArticle />
-      </div>
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-14 dark:bg-gray-900">
+      <OptionTaxCalculator />
+      <div className="sm:py-10"></div>
+      <SEOArticle />
     </main>
   );
 }
