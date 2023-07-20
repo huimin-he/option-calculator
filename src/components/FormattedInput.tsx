@@ -20,7 +20,7 @@ const FormattedNumberInput: React.FC<FormattedNumberInputProps> = ({
     let input = e.target.value;
 
     // Check if input contains only digits, comma or it's a backspace
-    const regex = /^[0-9,$]*$/;
+    const regex = /^[0-9.,$]*$/;
     if (regex.test(input)) {
       if (isCurrency && input[0] === "$") {
         input = input.slice(1);

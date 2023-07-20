@@ -23,42 +23,6 @@ const OptionTaxCalculator = () => {
 
   const [exerciseDate, setExerciseDate] = useState(`${year}-${month}-${day}`);
 
-  // const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const input = e.target.value;
-
-  //   // Remove any existing commas
-  //   const noCommas = input.replace(/,/g, "");
-
-  //   // Test if the new input includes only digits
-  //   const regex = /^[0-9]+$/;
-  //   if (input === "" || regex.test(noCommas)) {
-  //     // Add new commas as thousand separators
-  //     const formattedInput = Number(noCommas).toLocaleString();
-
-  //     // Update the state with the formatted input
-  //     setQuantity(formattedInput);
-  //   }
-  // };
-
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value;
-    const noCommas = input.replace(/,/g, "");
-
-    // Test if the new input includes only digits
-    const regex = /^[0-9]+$/;
-    if (input === "" || regex.test(noCommas)) {
-      let formattedInput = noCommas;
-
-      // Only parse and format if not empty
-      if (noCommas !== "") {
-        formattedInput = new Intl.NumberFormat().format(parseInt(noCommas));
-      }
-
-      // Update the state with the formatted input
-      setQuantity(formattedInput);
-    }
-  };
-
   // TODO: implement the logic for tax calculations based on the inputs
   const AMT_EXEMPTION_SINGLE = 81300; // 2023 figure, update as needed
   const AMT_EXEMPTION_MARRIED = 126500; // 2023 figure, update as needed
@@ -68,7 +32,6 @@ const OptionTaxCalculator = () => {
 
   // ... rest of OptionTaxCalculator component ...
 
-  // TODO: implement the logic for tax calculations based on the inputs
   const exerciseCost = strToNumber(quantity) * strToNumber(strikePrice);
 
   // The cost is the "preference item" for AMT calculation
@@ -134,11 +97,11 @@ const OptionTaxCalculator = () => {
   };
 
   const data = {
-    labels: ["Exercise cost", "Today’s tax", "End of year tax"],
+    labels: ["Exercise cost", "End of year tax"],
     datasets: [
       {
         label: "Tax",
-        data: [exerciseCost, todayTax, additionalTax],
+        data: [exerciseCost, additionalTax],
       },
     ],
   };
@@ -156,7 +119,7 @@ const OptionTaxCalculator = () => {
               htmlFor="default-input"
               className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Option details
+              Option Details
             </label>
 
             {/* <div>
@@ -194,7 +157,7 @@ const OptionTaxCalculator = () => {
               <FormattedNumberInput
                 value={valuePerShare}
                 isCurrency={true}
-                label="Per share value (409A)"
+                label="Per Share Value (409A)"
                 onValueChange={function (value: string): void {
                   setValuePerShare(value);
                 }}
@@ -210,7 +173,7 @@ const OptionTaxCalculator = () => {
             <FormattedNumberInput
               value={income}
               isCurrency={true}
-              label="Taxable income"
+              label="Taxable Income"
               onValueChange={function (value: string): void {
                 setIncome(value);
               }}
@@ -266,12 +229,12 @@ const OptionTaxCalculator = () => {
               </p>
               <p className="font-bold ">${formatCurrency(exerciseCost)} USD</p>
             </div>
-            <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
+            {/* <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
               <p className="text-gray-700">
                 Taxes withheld on the day of the exercise:
               </p>
               <p className="font-bold">${formatCurrency(todayTax)} USD</p>
-            </div>
+            </div> */}
             <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
               <p className="text-gray-700">
                 Additional AMT at the end of the calendar year:
