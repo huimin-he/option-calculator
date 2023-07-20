@@ -5,6 +5,7 @@ import { Bar } from "react-chartjs-2";
 // import { CategoryScale, Chart } from "chart.js";
 import { Chart, registerables } from "chart.js";
 import FormattedNumberInput from "./FormattedInput";
+import FloatingInput from "./FloatingInput";
 
 Chart.register(...registerables);
 
@@ -145,32 +146,29 @@ const OptionTaxCalculator = () => {
   return (
     <>
       <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:px-4 sm:my-4 items-center justify-center">
-        FY 2023 Option Tax Estimate
+        FY 2023 Employee Option Tax Estimate
       </div>
 
       <div className="grid grid-cols-1 sm:flex gap-4">
         <div className="bg-slate-100 px-5 py-3 rounded-lg">
           <section className="space-y-1">
-            <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:my-4">
-              Input
-            </div>
+            <label
+              htmlFor="default-input"
+              className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Option details
+            </label>
 
-            <div>
-              <label
-                htmlFor="default-input"
-                className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Option type and price details
-              </label>
+            {/* <div>
               <select
                 value={optionType}
                 onChange={(e) => setOptionType(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
                 <option value="ISO">ISO</option>
-                {/* <option value="NSO">NSO</option> */}
+                <option value="NSO">NSO</option>
               </select>
-            </div>
+            </div> */}
 
             <div>
               <FormattedNumberInput
@@ -209,33 +207,39 @@ const OptionTaxCalculator = () => {
             >
               Personal Details
             </label>
-            <div>
-              <FormattedNumberInput
-                value={income}
-                isCurrency={true}
-                label="Taxable income"
-                onValueChange={function (value: string): void {
-                  setIncome(value);
-                }}
-              />
-            </div>
-            <div>
+            <FormattedNumberInput
+              value={income}
+              isCurrency={true}
+              label="Taxable income"
+              onValueChange={function (value: string): void {
+                setIncome(value);
+              }}
+            />
+            <div className="relative">
               <select
+                id="floating_outlined"
                 value={filingStatus}
                 onChange={(e) => setFilingStatus(e.target.value)}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-white rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
               >
                 <option value="Single">Single</option>
                 <option value="Married">Married</option>
               </select>
+              <label
+                htmlFor="floating_outlined"
+                className="pointer-events-none absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-4  left-1"
+              >
+                {"Filing Status"}
+              </label>
             </div>
 
-            <div>
+            {/* <div>
               <label
                 htmlFor="default-input"
                 className="block text-sm font-medium text-gray-900 dark:text-white"
               >
-                {/* Exercising Date */}
+                Exercising Date
               </label>
               <input
                 id="default-input"
@@ -244,13 +248,13 @@ const OptionTaxCalculator = () => {
                 onChange={(e) => setExerciseDate(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
-            </div>
+            </div> */}
           </section>
         </div>
 
         <div className="bg-slate-100 px-3 py-3 rounded-lg">
           <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:my-4">
-            Result
+            Option Tax Summary
           </div>
           <div className="flex w-full shrink-0">
             <Bar data={data} options={options} />
