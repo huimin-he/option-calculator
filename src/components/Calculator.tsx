@@ -54,20 +54,10 @@ const OptionTaxCalculator = () => {
       amtTax = AMT_RATE1_MAX * AMT_RATE1 + (amti - AMT_RATE1_MAX) * AMT_RATE2;
     }
   }
-
-  // The tax to be paid today is the larger of the regular tax or AMT tax
-  let todayTax = 0;
-
   // For simplicity, let's assume end of year tax is the same as today's tax
   let regularTax = getRegularTax(strToNumber(income), filingStatus);
   let endOfYearTax = Math.max(regularTax, amtTax); // this is likely an oversimplification
   let additionalTax = Math.max(endOfYearTax - regularTax, 0);
-
-  // console.log("preferenceItem", preferenceItem);
-  // console.log("amtExemption", amtExemption);
-  // console.log("amti", amti);
-  // console.log("amtTax", amtTax);
-  // console.log("regularTax", regularTax);
 
   const options = {
     scales: {
@@ -109,7 +99,7 @@ const OptionTaxCalculator = () => {
   return (
     <>
       <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:px-4 sm:my-4 items-center justify-center">
-        FY 2023 Employee Option Tax Estimate
+        FY23 Employee ISO Option Tax Estimate
       </div>
 
       <div className="grid grid-cols-1 sm:flex gap-4">
@@ -121,18 +111,6 @@ const OptionTaxCalculator = () => {
             >
               Option Details
             </label>
-
-            {/* <div>
-              <select
-                value={optionType}
-                onChange={(e) => setOptionType(e.target.value)}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              >
-                <option value="ISO">ISO</option>
-                <option value="NSO">NSO</option>
-              </select>
-            </div> */}
-
             <div>
               <FormattedNumberInput
                 value={quantity}
@@ -196,22 +174,6 @@ const OptionTaxCalculator = () => {
                 {"Filing Status"}
               </label>
             </div>
-
-            {/* <div>
-              <label
-                htmlFor="default-input"
-                className="block text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Exercising Date
-              </label>
-              <input
-                id="default-input"
-                type="date"
-                value={exerciseDate}
-                onChange={(e) => setExerciseDate(e.target.value)}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-            </div> */}
           </section>
         </div>
 
