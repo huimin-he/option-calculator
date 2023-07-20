@@ -158,7 +158,7 @@ const OptionTaxCalculator = () => {
             <div>
               <label
                 htmlFor="default-input"
-                className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Option type and price details
               </label>
@@ -184,6 +184,7 @@ const OptionTaxCalculator = () => {
             <div>
               <FormattedNumberInput
                 value={strikePrice}
+                isCurrency={true}
                 label="Strike Price"
                 onValueChange={function (value: string): void {
                   setStrikePrice(value);
@@ -194,6 +195,7 @@ const OptionTaxCalculator = () => {
             <div>
               <FormattedNumberInput
                 value={valuePerShare}
+                isCurrency={true}
                 label="Per share value (409A)"
                 onValueChange={function (value: string): void {
                   setValuePerShare(value);
@@ -210,6 +212,7 @@ const OptionTaxCalculator = () => {
             <div>
               <FormattedNumberInput
                 value={income}
+                isCurrency={true}
                 label="Taxable income"
                 onValueChange={function (value: string): void {
                   setIncome(value);
@@ -228,21 +231,19 @@ const OptionTaxCalculator = () => {
             </div>
 
             <div>
-              <div className="mb-6">
-                <label
-                  htmlFor="default-input"
-                  className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  {/* Exercising Date */}
-                </label>
-                <input
-                  id="default-input"
-                  type="date"
-                  value={exerciseDate}
-                  onChange={(e) => setExerciseDate(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </div>
+              <label
+                htmlFor="default-input"
+                className="block text-sm font-medium text-gray-900 dark:text-white"
+              >
+                {/* Exercising Date */}
+              </label>
+              <input
+                id="default-input"
+                type="date"
+                value={exerciseDate}
+                onChange={(e) => setExerciseDate(e.target.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
             </div>
           </section>
         </div>
@@ -348,10 +349,8 @@ const formatCurrency = (num: number): string => {
 
 function strToNumber(str: string) {
   // Remove commas from the string
-  const noCommas = str.replace(/,/g, "");
-
   // Convert the resulting string to a number
-  return Number(noCommas);
+  return Number(str.replace(/,/g, ""));
 }
 
 export default OptionTaxCalculator;
