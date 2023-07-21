@@ -11,7 +11,7 @@ Chart.register(...registerables);
 const OptionTaxCalculator = () => {
   const [optionType, setOptionType] = useState("ISO");
   const [quantity, setQuantity] = useState("10,000");
-  const [income, setIncome] = useState("150,000");
+  const [income, setIncome] = useState("80,000");
   const [strikePrice, setStrikePrice] = useState("5");
   const [valuePerShare, setValuePerShare] = useState("20");
   const [filingStatus, setFilingStatus] = useState("Single");
@@ -97,8 +97,8 @@ const OptionTaxCalculator = () => {
 
   return (
     <>
-      <div className="bg-white shadow-lg rounded-lg py-5 px-5">
-        <div className="bg-blue-600 rounded-t-lg  text-white py-4 px-4 text-2xl sm:text-3xl font-bold sm:px-4 sm:py-4 items-center justify-center -mx-5 -mt-5">
+      <div className="bg-white shadow-lg rounded-lg py-10 px-10">
+        <div className="bg-blue-600 rounded-t-lg text-center text-white py-4 px-4 text-2xl sm:text-3xl font-bold sm:px-4 sm:py-4 items-center justify-center -mx-10 -mt-10">
           FY23 Employee ISO Option Tax Estimate
         </div>
 
