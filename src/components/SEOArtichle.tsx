@@ -3,8 +3,10 @@ import "tailwindcss/tailwind.css";
 import "@tailwindcss/typography";
 
 const SEOArticle = () => (
-  <div className="prose lg:prose-sm">
-    <h1>Understanding Employee Stock Options and Tax Implications</h1>
+  <div className="prose lg:prose-sm p-4">
+    <h1 className="text-2xl sm:text-3xl">
+      Understanding Employee Stock Options and Tax Implications
+    </h1>
 
     <h2>1. Key Definitions</h2>
     <ul>

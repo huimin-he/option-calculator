@@ -96,119 +96,117 @@ const OptionTaxCalculator = () => {
   };
 
   return (
-    <div className="bg-white">
-      <div className="bg-blue-600 rounded-t-lg  text-white py-4 px-4 text-2xl sm:text-3xl font-bold sm:px-4 sm:py-4 items-center justify-center">
-        FY23 Employee ISO Option Tax Estimate
-      </div>
-
-      <div className="grid grid-cols-1 sm:flex gap-4">
-        <div className="bg-white px-5 py-3 rounded-lg ">
-          <div className="font-bold sm:mt-4 sm:my-4">
-            Option Terms and Income
-          </div>
-          <section className="space-y-1">
-            <label
-              htmlFor="default-input"
-              className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Option Details
-            </label>
-            <div>
-              <FormattedNumberInput
-                value={quantity}
-                label="Exercise Quantity"
-                onValueChange={function (value: string): void {
-                  setQuantity(value);
-                }}
-              />
-            </div>
-            <div>
-              <FormattedNumberInput
-                value={strikePrice}
-                isCurrency={true}
-                label="Strike Price"
-                onValueChange={function (value: string): void {
-                  setStrikePrice(value);
-                }}
-              />
-            </div>
-
-            <div>
-              <FormattedNumberInput
-                value={valuePerShare}
-                isCurrency={true}
-                label="Per Share Value (409A)"
-                onValueChange={function (value: string): void {
-                  setValuePerShare(value);
-                }}
-              />
-            </div>
-
-            <label
-              htmlFor="default-input"
-              className="block mt-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Personal Details
-            </label>
-            <FormattedNumberInput
-              value={income}
-              isCurrency={true}
-              label="Taxable Income"
-              onValueChange={function (value: string): void {
-                setIncome(value);
-              }}
-            />
-            <div className="relative">
-              <select
-                id="floating_outlined"
-                value={filingStatus}
-                onChange={(e) => setFilingStatus(e.target.value)}
-                className="block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-white rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-              >
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-              </select>
-              <label
-                htmlFor="floating_outlined"
-                className="pointer-events-none absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-4  left-1"
-              >
-                {"Filing Status"}
-              </label>
-            </div>
-          </section>
+    <>
+      <div className="bg-white shadow-lg rounded-lg py-5 px-5">
+        <div className="bg-blue-600 rounded-t-lg  text-white py-4 px-4 text-2xl sm:text-3xl font-bold sm:px-4 sm:py-4 items-center justify-center -mx-5 -mt-5">
+          FY23 Employee ISO Option Tax Estimate
         </div>
 
-        <div className="bg-white px-3 py-3 rounded-lg">
-          <div className="font-bold sm:mt-4 sm:my-4">AMT Tax Summary</div>
-          <div className="flex w-full shrink-0">
-            <Bar data={data} options={options} />
-          </div>
-          <div className="flex flex-col sm:w-full pr-4">
-            <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
-              <p className="text-sm text-gray-700 font">Exercise Cost</p>
-              <p className="text-lg font-bold ">
-                ${formatCurrency(exerciseCost)} USD
-              </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-24">
+          <div className="bg-white px-5 py-3 rounded-lg space-y-10">
+            <div className="font-bold text-lg sm:mt-4 sm:my-4">
+              Option Terms and Income
             </div>
-            {/* <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
+            <section className="space-y-10">
+              <div className="space-y-3">
+                <h2>Option Details</h2>
+                <div>
+                  <FormattedNumberInput
+                    value={quantity}
+                    label="Exercise Quantity"
+                    onValueChange={function (value: string): void {
+                      setQuantity(value);
+                    }}
+                  />
+                </div>
+                <div>
+                  <FormattedNumberInput
+                    value={strikePrice}
+                    isCurrency={true}
+                    label="Strike Price"
+                    onValueChange={function (value: string): void {
+                      setStrikePrice(value);
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <FormattedNumberInput
+                    value={valuePerShare}
+                    isCurrency={true}
+                    label="Per Share Value (409A)"
+                    onValueChange={function (value: string): void {
+                      setValuePerShare(value);
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <h2>Personal Details</h2>
+                <FormattedNumberInput
+                  value={income}
+                  isCurrency={true}
+                  label="Taxable Income"
+                  onValueChange={function (value: string): void {
+                    setIncome(value);
+                  }}
+                />
+                <div className="relative">
+                  <select
+                    id="floating_outlined"
+                    value={filingStatus}
+                    onChange={(e) => setFilingStatus(e.target.value)}
+                    className="font-bold shadow block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-white rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    placeholder=" "
+                  >
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                  </select>
+                  <label
+                    htmlFor="floating_outlined"
+                    className="pointer-events-none absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-4  left-1"
+                  >
+                    {"Filing Status"}
+                  </label>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div className="bg-white px-3 py-3 rounded-lg space-y-10">
+            <div className="text-lg font-bold sm:mt-4 sm:my-4">
+              AMT Tax Summary
+            </div>
+            <div className="flex w-full shrink-0">
+              <Bar data={data} options={options} />
+            </div>
+            <div className="flex flex-col sm:w-full pr-4">
+              <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
+                <p className="text-sm text-gray-700 font">Exercise Cost</p>
+                <p className="text-lg font-bold ">
+                  ${formatCurrency(exerciseCost)} USD
+                </p>
+              </div>
+              {/* <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
               <p className="text-gray-700">
                 Taxes withheld on the day of the exercise:
               </p>
               <p className="font-bold">${formatCurrency(todayTax)} USD</p>
             </div> */}
-            <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
-              <p className="text-sm text-gray-700">
-                Additional AMT at the end of the calendar year:
-              </p>
-              <p className="text-lg font-bold">
-                ${formatCurrency(additionalTax)} USD
-              </p>
+              <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
+                <p className="text-sm text-gray-700">
+                  Additional AMT at the end of the calendar year:
+                </p>
+                <p className="text-lg font-bold">
+                  ${formatCurrency(additionalTax)} USD
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
