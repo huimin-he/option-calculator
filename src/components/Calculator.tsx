@@ -5,7 +5,6 @@ import { Bar } from "react-chartjs-2";
 // import { CategoryScale, Chart } from "chart.js";
 import { Chart, registerables } from "chart.js";
 import FormattedNumberInput from "./FormattedInput";
-import FloatingInput from "./FloatingInput";
 
 Chart.register(...registerables);
 
@@ -97,13 +96,16 @@ const OptionTaxCalculator = () => {
   };
 
   return (
-    <>
-      <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:px-4 sm:my-4 items-center justify-center">
+    <div className="bg-white">
+      <div className="bg-blue-600 rounded-t-lg  text-white py-4 px-4 text-2xl sm:text-3xl font-bold sm:px-4 sm:py-4 items-center justify-center">
         FY23 Employee ISO Option Tax Estimate
       </div>
 
       <div className="grid grid-cols-1 sm:flex gap-4">
-        <div className="bg-slate-100 px-5 py-3 rounded-lg">
+        <div className="bg-white px-5 py-3 rounded-lg ">
+          <div className="font-bold sm:mt-4 sm:my-4">
+            Option Terms and Income
+          </div>
           <section className="space-y-1">
             <label
               htmlFor="default-input"
@@ -177,19 +179,17 @@ const OptionTaxCalculator = () => {
           </section>
         </div>
 
-        <div className="bg-slate-100 px-3 py-3 rounded-lg">
-          <div className="text-3xl sm:text-3xl font-bold sm:mt-4 sm:my-4">
-            Option Tax Summary
-          </div>
+        <div className="bg-white px-3 py-3 rounded-lg">
+          <div className="font-bold sm:mt-4 sm:my-4">AMT Tax Summary</div>
           <div className="flex w-full shrink-0">
             <Bar data={data} options={options} />
           </div>
           <div className="flex flex-col sm:w-full pr-4">
             <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
-              <p className="text-gray-700 font">
-                Cost of your option exercise:
+              <p className="text-sm text-gray-700 font">Exercise Cost</p>
+              <p className="text-lg font-bold ">
+                ${formatCurrency(exerciseCost)} USD
               </p>
-              <p className="font-bold ">${formatCurrency(exerciseCost)} USD</p>
             </div>
             {/* <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
               <p className="text-gray-700">
@@ -198,15 +198,17 @@ const OptionTaxCalculator = () => {
               <p className="font-bold">${formatCurrency(todayTax)} USD</p>
             </div> */}
             <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
-              <p className="text-gray-700">
+              <p className="text-sm text-gray-700">
                 Additional AMT at the end of the calendar year:
               </p>
-              <p className="font-bold">${formatCurrency(additionalTax)} USD</p>
+              <p className="text-lg font-bold">
+                ${formatCurrency(additionalTax)} USD
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

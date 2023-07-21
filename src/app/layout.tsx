@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "@/components/NavBar";
 import { Analytics } from "@vercel/analytics/react";
+import Breadcrumb from "@/components/BreadCrumbs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavBar />
-        {children}
-        <Analytics />
-        <Footer />
+        <div className="bg-slate-50">
+          <NavBar />
+          {children}
+          <Analytics />
+          <Footer />
+        </div>
       </body>
     </html>
   );

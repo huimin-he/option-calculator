@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Breadcrumb from "./BreadCrumbs";
 
 export default function NavBar() {
   const [navbarOpen, setNavbarOpen] = useState(false);
