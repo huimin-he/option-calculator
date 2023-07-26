@@ -61,6 +61,7 @@ const OptionTaxCalculator = () => {
   const options = {
     scales: {
       y: {
+        stacked: true,
         offset: false, // Enable the offset option
         ticks: {
           callback: function (value: number | string) {
@@ -69,6 +70,9 @@ const OptionTaxCalculator = () => {
           stepSize: 10000,
           maxTicksLimit: 6,
         },
+      },
+      x: {
+        stacked: true, // Enable the stacked property for x-axis too
       },
     },
     plugins: {
@@ -91,20 +95,21 @@ const OptionTaxCalculator = () => {
       {
         label: "Tax",
         data: [exerciseCost, additionalTax],
+        stack: "Stack 0", // Add this line
       },
     ],
   };
 
   return (
     <>
-      <div className="bg-white border">
-        <div className="bg-blue-600 text-center text-white py-4 px-4 text-2xl sm:text-3xl sm:px-4 sm:py-4 items-center justify-center">
+      <div className="bg-white">
+        <div className="py-4 px-4 text-2xl sm:text-3xl sm:px-4 border-b sm:mb-10 items-center justify-center">
           FY23 Employee ISO Option Tax Estimate
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-16">
-          <div className="bg-white space-y-10 px-10 py-5 sm:py-10">
-            <div className="text-2xl sm:mt-4 sm:my-4">
+        <div className="border-b grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-16">
+          <div className="border-r space-y-10 px-10 mb-10">
+            <div className="text-2xl mt-4 sm:mt-4 sm:my-4">
               Option Terms and Income
             </div>
             <section className="space-y-10">
@@ -171,34 +176,30 @@ const OptionTaxCalculator = () => {
             </section>
           </div>
 
-          <div className="bg-white px-10 py-5 sm:py-10 sm:pr-20 rounded-lg space-y-10">
+          <div className="bg-white px-10 mb-10 rounded-lg space-y-10">
             <div className="text-2xl sm:mt-4 sm:my-4">AMT Tax Summary</div>
             <div className="flex w-full shrink-0">
               <Bar data={data} options={options} />
             </div>
-            <div className="flex flex-col sm:w-full pr-4 space-y-2">
+            <div className="flex flex-col sm:w-full pr-4 space-y-6">
               <div className="bg-white border-gray-400 rounded-lg w-full">
-                <p className="text-sm text-gray-700 font">
-                  Total Out-of-pocket
-                </p>
-                <p className="text-2xl">
-                  <span className="text-sm">$</span>
+                <p className="text-sm">Total Out-of-pocket</p>
+                <p className="text-3xl">
+                  <span className="text-sm">$ </span>
                   {formatCurrency(exerciseCost + additionalTax)}
                 </p>
               </div>
               <div className="bg-white w-full">
-                <p className="text-sm text-gray-700">Exercise Cost</p>
-                <p className="text-lg">
-                  <span className="text-sm">$</span>
+                <p className="text-sm">Exercise Cost</p>
+                <p className="text-xl">
+                  <span className="text-sm">$ </span>
                   {formatCurrency(exerciseCost)}
                 </p>
               </div>
               <div className="w-full">
-                <p className="text-sm text-gray-700">
-                  Additional AMT at the end of the calendar year:
-                </p>
-                <p className="text-lg ">
-                  <span className="text-sm">$</span>
+                <p className="text-sm">Additional AMT at year end</p>
+                <p className="text-xl">
+                  <span className="text-sm">$ </span>
                   {formatCurrency(additionalTax)}
                 </p>
               </div>
