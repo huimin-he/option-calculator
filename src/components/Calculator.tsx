@@ -97,20 +97,20 @@ const OptionTaxCalculator = () => {
 
   return (
     <>
-      <div className="bg-white shadow-lg rounded-lg py-10 px-10">
-        <div className="bg-blue-600 rounded-t-lg text-center text-white py-4 px-4 text-2xl sm:text-3xl font-bold sm:px-4 sm:py-4 items-center justify-center -mx-10 -mt-10">
+      <div className="bg-white border">
+        <div className="bg-blue-600 text-center text-white py-4 px-4 text-2xl sm:text-3xl sm:px-4 sm:py-4 items-center justify-center">
           FY23 Employee ISO Option Tax Estimate
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-24">
-          <div className="bg-white px-5 py-3 rounded-lg space-y-10">
-            <div className="font-bold text-lg sm:mt-4 sm:my-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-16">
+          <div className="bg-white space-y-10 px-10 py-5 sm:py-10">
+            <div className="text-2xl sm:mt-4 sm:my-4">
               Option Terms and Income
             </div>
             <section className="space-y-10">
-              <div className="space-y-3">
+              <div className="space-y-6">
                 <h2>Option Details</h2>
-                <div>
+                <div className="flex space-x-4">
                   <FormattedNumberInput
                     value={quantity}
                     label="Exercise Quantity"
@@ -118,8 +118,6 @@ const OptionTaxCalculator = () => {
                       setQuantity(value);
                     }}
                   />
-                </div>
-                <div>
                   <FormattedNumberInput
                     value={strikePrice}
                     isCurrency={true}
@@ -129,8 +127,7 @@ const OptionTaxCalculator = () => {
                     }}
                   />
                 </div>
-
-                <div>
+                <div className="">
                   <FormattedNumberInput
                     value={valuePerShare}
                     isCurrency={true}
@@ -142,7 +139,7 @@ const OptionTaxCalculator = () => {
                 </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-6">
                 <h2>Personal Details</h2>
                 <FormattedNumberInput
                   value={income}
@@ -157,7 +154,7 @@ const OptionTaxCalculator = () => {
                     id="floating_outlined"
                     value={filingStatus}
                     onChange={(e) => setFilingStatus(e.target.value)}
-                    className="font-bold shadow block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-white rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    className="block px-2.5 pb-1 pt-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
                   >
                     <option value="Single">Single</option>
@@ -165,7 +162,7 @@ const OptionTaxCalculator = () => {
                   </select>
                   <label
                     htmlFor="floating_outlined"
-                    className="pointer-events-none absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-4  left-1"
+                    className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                   >
                     {"Filing Status"}
                   </label>
@@ -174,32 +171,35 @@ const OptionTaxCalculator = () => {
             </section>
           </div>
 
-          <div className="bg-white px-3 py-3 rounded-lg space-y-10">
-            <div className="text-lg font-bold sm:mt-4 sm:my-4">
-              AMT Tax Summary
-            </div>
+          <div className="bg-white px-10 py-5 sm:py-10 sm:pr-20 rounded-lg space-y-10">
+            <div className="text-2xl sm:mt-4 sm:my-4">AMT Tax Summary</div>
             <div className="flex w-full shrink-0">
               <Bar data={data} options={options} />
             </div>
-            <div className="flex flex-col sm:w-full pr-4">
-              <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
-                <p className="text-sm text-gray-700 font">Exercise Cost</p>
-                <p className="text-lg font-bold ">
-                  ${formatCurrency(exerciseCost)} USD
+            <div className="flex flex-col sm:w-full pr-4 space-y-2">
+              <div className="bg-white border-gray-400 rounded-lg w-full">
+                <p className="text-sm text-gray-700 font">
+                  Total Out-of-pocket
+                </p>
+                <p className="text-2xl">
+                  <span className="text-sm">$</span>
+                  {formatCurrency(exerciseCost + additionalTax)}
                 </p>
               </div>
-              {/* <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
-              <p className="text-gray-700">
-                Taxes withheld on the day of the exercise:
-              </p>
-              <p className="font-bold">${formatCurrency(todayTax)} USD</p>
-            </div> */}
-              <div className="m-2 bg-white border border-gray-400 p-3 rounded-lg w-full">
+              <div className="bg-white w-full">
+                <p className="text-sm text-gray-700">Exercise Cost</p>
+                <p className="text-lg">
+                  <span className="text-sm">$</span>
+                  {formatCurrency(exerciseCost)}
+                </p>
+              </div>
+              <div className="w-full">
                 <p className="text-sm text-gray-700">
                   Additional AMT at the end of the calendar year:
                 </p>
-                <p className="text-lg font-bold">
-                  ${formatCurrency(additionalTax)} USD
+                <p className="text-lg ">
+                  <span className="text-sm">$</span>
+                  {formatCurrency(additionalTax)}
                 </p>
               </div>
             </div>
