@@ -61,6 +61,7 @@ const OptionTaxCalculator = () => {
   const options = {
     scales: {
       y: {
+        beginAtZero: true,
         stacked: true,
         offset: false, // Enable the offset option
         ticks: {
@@ -72,12 +73,33 @@ const OptionTaxCalculator = () => {
         },
       },
       x: {
-        stacked: true, // Enable the stacked property for x-axis too
+        beginAtZero: true,
+        stacked: false, // Enable the stacked property for x-axis too
+        barPercentage: 0.4,
+        categoryPercentage: 0.4,
       },
     },
     plugins: {
       legend: {
-        display: false, // Hide the legend for this example
+        display: true, // Hide the legend for this example
+        // position: "chartArea",
+        align: "end",
+      },
+      tooltip: {
+        enabled: true,
+      },
+      title: {
+        display: false,
+      },
+      datalabels: {
+        display: true,
+        align: "end",
+        anchor: "end",
+        formatter: (value: number | string, context: any) => value,
+        color: "#000000",
+        font: {
+          size: 14,
+        },
       },
     },
     layout: {
@@ -90,12 +112,19 @@ const OptionTaxCalculator = () => {
   };
 
   const data = {
-    labels: ["Exercise cost", "End of year tax"],
+    labels: [""],
     datasets: [
       {
-        label: "Tax",
-        data: [exerciseCost, additionalTax],
+        label: "Exercise Cost",
+        data: [exerciseCost],
         stack: "Stack 0", // Add this line
+        backgroundColor: "rgba(0,123,255,0.6)", // Blue
+      },
+      {
+        label: "AMT Tax",
+        data: [additionalTax],
+        stack: "Stack 0", // Add this line
+        backgroundColor: "rgba(40,167,69,0.6)", // Green
       },
     ],
   };
@@ -107,11 +136,11 @@ const OptionTaxCalculator = () => {
           FY23 Employee ISO Option Tax Estimate
         </div>
 
-        <div className="border-b grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-16">
+        <div className="border-b grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-6">
           <div className="border-r space-y-10 px-10 mb-10">
-            <div className="text-2xl mt-4 sm:mt-4 sm:my-4">
+            {/* <div className="text-2xl mt-4 sm:mt-4 sm:my-4">
               Option Terms and Income
-            </div>
+            </div> */}
             <section className="space-y-10">
               <div className="space-y-6">
                 <h2>Option Details</h2>
@@ -177,10 +206,7 @@ const OptionTaxCalculator = () => {
           </div>
 
           <div className="bg-white px-10 mb-10 rounded-lg space-y-10">
-            <div className="text-2xl sm:mt-4 sm:my-4">AMT Tax Summary</div>
-            <div className="flex w-full shrink-0">
-              <Bar data={data} options={options} />
-            </div>
+            {/* <div className="text-2xl sm:mt-4 sm:my-4">AMT Tax Summary</div> */}
             <div className="flex flex-col sm:w-full pr-4 space-y-6">
               <div className="bg-white border-gray-400 rounded-lg w-full">
                 <p className="text-sm">Total Out-of-pocket</p>
@@ -204,6 +230,9 @@ const OptionTaxCalculator = () => {
                 </p>
               </div>
             </div>
+            {/* <div className="flex w-full shrink-0">
+              <Bar data={data} options={options} />
+            </div> */}
           </div>
         </div>
       </div>
