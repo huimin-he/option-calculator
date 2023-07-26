@@ -5,6 +5,7 @@ import { Bar } from "react-chartjs-2";
 // import { CategoryScale, Chart } from "chart.js";
 import { Chart, registerables } from "chart.js";
 import FormattedNumberInput from "./FormattedInput";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 Chart.register(...registerables);
 
@@ -59,72 +60,79 @@ const OptionTaxCalculator = () => {
   let additionalTax = Math.max(endOfYearTax - regularTax, 0);
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: "x",
     scales: {
       y: {
-        beginAtZero: true,
-        stacked: true,
+        display: false,
+        // stacked: true,
         offset: false, // Enable the offset option
         ticks: {
           callback: function (value: number | string) {
             return `$${formatCurrency(Number(value))}`;
           },
           stepSize: 10000,
-          maxTicksLimit: 6,
+          maxTicksLimit: 3,
         },
       },
       x: {
-        beginAtZero: true,
-        stacked: false, // Enable the stacked property for x-axis too
-        barPercentage: 0.4,
-        categoryPercentage: 0.4,
+        // barPercentage: 0.5, // Adjust as per your needs
+        // categoryPercentage: 0.1, // Adjust as per your needs
+        display: false,
+        // beginAtZero: true,
+        stacked: true, // Enable the stacked property for x-axis too
       },
     },
     plugins: {
       legend: {
-        display: true, // Hide the legend for this example
-        // position: "chartArea",
-        align: "end",
+        display: false,
+        position: "right",
+        align: "start",
       },
       tooltip: {
-        enabled: true,
+        enabled: false,
       },
       title: {
         display: false,
       },
       datalabels: {
+        offset: 4,
         display: true,
-        align: "end",
-        anchor: "end",
-        formatter: (value: number | string, context: any) => value,
-        color: "#000000",
+        align: "center",
+        anchor: "center",
+        formatter: (value: any, context: any) => {
+          return context.dataset.label;
+        },
+        color: "#FFFFFF",
         font: {
           size: 14,
         },
       },
     },
     layout: {
-      padding: {
-        top: 20, // Set the top padding to create a margin
-        bottom: 0,
-        right: 20,
-      },
+      // padding: {
+      //   top: 20, // Set the top padding to create a margin
+      //   bottom: 0,
+      //   right: 20,
+      // },
     },
   };
 
   const data = {
-    labels: [""],
+    labels: ["tax1", "tax2"],
     datasets: [
-      {
-        label: "Exercise Cost",
-        data: [exerciseCost],
-        stack: "Stack 0", // Add this line
-        backgroundColor: "rgba(0,123,255,0.6)", // Blue
-      },
       {
         label: "AMT Tax",
         data: [additionalTax],
         stack: "Stack 0", // Add this line
         backgroundColor: "rgba(40,167,69,0.6)", // Green
+      },
+      {
+        label: "Exercise Cost",
+        data: [exerciseCost],
+        stack: "Stack 0", // Add this line
+        backgroundColor: "rgba(0,123,255,0.6)", // Blue
       },
     ],
   };
@@ -132,12 +140,12 @@ const OptionTaxCalculator = () => {
   return (
     <>
       <div className="bg-white">
-        <div className="py-4 px-4 text-2xl sm:text-3xl sm:px-4 border-b sm:mb-10 items-center justify-center">
-          FY23 Employee ISO Option Tax Estimate
+        <div className="py-4 mx-4 mt-4 text-2xl sm:text-3xl border-b mb-8 sm:mb-8 items-center justify-center">
+          FY23 Employee Option ISO Tax
         </div>
 
-        <div className="border-b grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-6">
-          <div className="border-r space-y-10 px-10 mb-10">
+        <div className="mx-6 border-b grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
+          <div className="sm:border-r space-y-10 mb-10 sm:pr-10">
             {/* <div className="text-2xl mt-4 sm:mt-4 sm:my-4">
               Option Terms and Income
             </div> */}
@@ -205,9 +213,8 @@ const OptionTaxCalculator = () => {
             </section>
           </div>
 
-          <div className="bg-white px-10 mb-10 rounded-lg space-y-10">
-            {/* <div className="text-2xl sm:mt-4 sm:my-4">AMT Tax Summary</div> */}
-            <div className="flex flex-col sm:w-full pr-4 space-y-6">
+          <div className="bg-white mb-10 rounded-lg flex">
+            <div className="flex flex-col pr-4 space-y-6">
               <div className="bg-white border-gray-400 rounded-lg w-full">
                 <p className="text-sm">Total Out-of-pocket</p>
                 <p className="text-3xl">
@@ -223,15 +230,20 @@ const OptionTaxCalculator = () => {
                 </p>
               </div>
               <div className="w-full">
-                <p className="text-sm">Additional AMT at year end</p>
+                <p className="text-sm">AMT Tax</p>
                 <p className="text-xl">
                   <span className="text-sm">$ </span>
                   {formatCurrency(additionalTax)}
                 </p>
               </div>
             </div>
-            {/* <div className="flex w-full shrink-0">
-              <Bar data={data} options={options} />
+            {/* <div className="flex justify-center items-center w-[300px] h-[400px] ml-5 -mt-20 -mr-16">
+              <Bar
+                className="h-full w-full"
+                data={data}
+                options={options}
+                plugins={[ChartDataLabels]}
+              />
             </div> */}
           </div>
         </div>
