@@ -10,7 +10,11 @@ interface BreadcrumbItem {
   current: boolean;
 }
 
-const Breadcrumb: React.FC = () => {
+interface BreadcrumbProps {
+  className?: string;
+}
+
+const Breadcrumb: React.FC<BreadcrumbProps> = (className) => {
   const pathname = usePathname();
 
   if (pathname === "/") {
@@ -28,7 +32,7 @@ const Breadcrumb: React.FC = () => {
 
       return {
         href: index < arr.length - 1 ? href : undefined,
-        label: segment,
+        label: segment.charAt(0).toUpperCase() + segment.slice(1),
         current: index === arr.length - 1,
       };
     }
@@ -43,18 +47,15 @@ const Breadcrumb: React.FC = () => {
 
   return (
     <>
-      <div className="mt-4 flex items-center justify-center">
-        <nav
-          className="mx-6 sm:gap-10 grid grid-cols-2"
-          aria-label="Breadcrumb"
-        >
+      <div className={`relative mt-2 mx-4 sm:mx-0 sm:mt-0`}>
+        <nav className="" aria-label="Breadcrumb">
           <div className="flex items-center space-x-0">
             {breadcrumbItems.map((item) => (
               <button key={item.label}>
                 <div className="flex items-center">
                   {item.href ? (
                     <Link href={item.href}>
-                      <label className="text-sm font-medium text-gray-500 hover:text-gray-700 cursor-pointer">
+                      <label className="hover:border-b-2 border-black text-sm font-medium text-gray-500 hover:text-gray-700 cursor-pointer">
                         {item.label}
                       </label>
                     </Link>

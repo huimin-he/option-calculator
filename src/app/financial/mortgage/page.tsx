@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import FormattedNumberInput from "@/components/FormattedInput";
+import Breadcrumb from "@/components/BreadCrumbs";
 
 const MortgageCalculator = () => {
   const [showOtherCost, setShowOtherCost] = useState(false);
@@ -44,11 +45,12 @@ const MortgageCalculator = () => {
     <>
       <div className="flex min-h-screen flex-col items-center sm:p-6">
         <div className="bg-white">
-          <div className="py-4 mx-4 mt-4 text-2xl sm:text-3xl border-b mb-8 sm:mb-8 items-center justify-center">
+          <Breadcrumb className="" />
+          <div className="py-4 mx-4 mt-1 sm:mt-4 text-2xl sm:mx-0 sm:text-3xl border-b mb-8 sm:mb-8 items-center justify-center">
             Mortgage Calculator
           </div>
 
-          <div className="mx-6 border-b grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
+          <div className="mx-6 border-b grid grid-cols-1 sm:mx-0  sm:grid-cols-2 gap-6 sm:gap-10">
             <div className="sm:border-r space-y-10 mb-10 sm:pr-10">
               <section className="space-y-10">
                 {/* Toggle button for showing Other Tax & Cost section */}
@@ -141,6 +143,38 @@ const MortgageCalculator = () => {
                     {formatCurrency(monthlyMortgagePayment)}
                   </p>
                 </div>
+                {showOtherCost && (
+                  <>
+                    <div className="bg-white w-full">
+                      <p className="text-sm">Monthly Property Tax</p>
+                      <p className="text-xl">
+                        <span className="text-sm">$ </span>
+                        {formatCurrency(monthlyPropertyTax)}
+                      </p>
+                    </div>
+                    <div className="bg-white w-full">
+                      <p className="text-sm">Monthly Home Insurance</p>
+                      <p className="text-xl">
+                        <span className="text-sm">$ </span>
+                        {formatCurrency(monthlyHomeInsurance)}
+                      </p>
+                    </div>
+                    <div className="bg-white w-full">
+                      <p className="text-sm">Monthly PMI Insurance</p>
+                      <p className="text-xl">
+                        <span className="text-sm">$ </span>
+                        {formatCurrency(monthlyPMIInsurance)}
+                      </p>
+                    </div>
+                    <div className="bg-white w-full">
+                      <p className="text-sm">Monthly HOA Fee</p>
+                      <p className="text-xl">
+                        <span className="text-sm">$ </span>
+                        {formatCurrency(monthlyHOAFee)}
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
