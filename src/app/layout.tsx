@@ -23,6 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="">
           <NavBar />
+          <Breadcrumb />
           {children}
           <Analytics />
           <Footer />

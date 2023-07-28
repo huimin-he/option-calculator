@@ -42,39 +42,47 @@ const Breadcrumb: React.FC = () => {
   });
 
   return (
-    <nav className="flex ml-20" aria-label="Breadcrumb">
-      <ol className="flex items-center space-x-4">
-        {breadcrumbItems.map((item) => (
-          <li key={item.label}>
-            <div className="flex items-center">
-              {item.href ? (
-                <Link href={item.href}>
-                  <label className="text-sm font-medium text-gray-500 hover:text-gray-700">
-                    {item.label}
-                  </label>
-                </Link>
-              ) : (
-                <span className="text-sm font-medium text-gray-900">
-                  {item.label}
-                </span>
-              )}
+    <>
+      <div className="mt-4 flex items-center justify-center">
+        <nav
+          className="mx-6 sm:gap-10 grid grid-cols-2"
+          aria-label="Breadcrumb"
+        >
+          <div className="flex items-center space-x-0">
+            {breadcrumbItems.map((item) => (
+              <button key={item.label}>
+                <div className="flex items-center">
+                  {item.href ? (
+                    <Link href={item.href}>
+                      <label className="text-sm font-medium text-gray-500 hover:text-gray-700 cursor-pointer">
+                        {item.label}
+                      </label>
+                    </Link>
+                  ) : (
+                    <span className="text-sm font-medium text-gray-900">
+                      {item.label}
+                    </span>
+                  )}
 
-              {!item.current && (
-                <svg
-                  className="flex-shrink-0 h-5 w-5 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  aria-hidden="true"
-                >
-                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
-                </svg>
-              )}
-            </div>
-          </li>
-        ))}
-      </ol>
-    </nav>
+                  {!item.current && (
+                    <svg
+                      className="flex-shrink-0 h-5 w-5 text-gray-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      aria-hidden="true"
+                    >
+                      <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                    </svg>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+          <div></div>
+        </nav>
+      </div>
+    </>
   );
 };
 
