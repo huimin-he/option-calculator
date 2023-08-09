@@ -6,6 +6,7 @@ import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import FormattedNumberInput from "./FormattedInput";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import Breadcrumb from "./BreadCrumbs";
 
 Chart.register(...registerables);
 
@@ -140,11 +141,12 @@ const OptionTaxCalculator = () => {
   return (
     <>
       <div className="bg-white">
-        <div className="py-4 mx-4 mt-4 text-2xl sm:text-3xl border-b mb-8 sm:mb-8 items-center justify-center">
+        <Breadcrumb />
+        <div className="py-4 mx-4 mt-4 text-2xl sm:mx-0 sm:text-3xl border-b mb-8 sm:mb-8 items-center justify-center">
           FY23 Employee Option ISO Tax
         </div>
 
-        <div className="mx-6 border-b grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
+        <div className="mx-6 border-b grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10 sm:mx-0">
           <div className="sm:border-r space-y-10 mb-10 sm:pr-10">
             {/* <div className="text-2xl mt-4 sm:mt-4 sm:my-4">
               Option Terms and Income

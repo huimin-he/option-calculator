@@ -45,13 +45,18 @@ const BMICalculator = () => {
             <div className="bg-white mb-10 flex">
               <div className="flex flex-col pr-4 space-y-10">
                 <div className="bg-white border-gray-400 rounded-lg w-full space-y-4">
-                  <p className="text-sm">Your Body Mass Index (BMI)</p>
-                  <p className={`text-3xl ${getColorCode(bmi)}`}>
-                    {formatNumber(bmi)}
-                  </p>
-                  <p className={`text-sm ${getColorCode(bmi)}`}>
-                    Healthiness: {healthiness}
-                  </p>
+                  <div>
+                    <p className="text-sm">Your Body Mass Index (BMI)</p>
+                    <p className={`text-3xl ${getColorCode(bmi)}`}>
+                      {formatNumber(bmi)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className={`text-sm`}>Healthiness </p>
+                    <p className={`text-xl ${getColorCode(bmi)}`}>
+                      {healthiness}
+                    </p>
+                  </div>
                 </div>
                 <div className="bg-white border-gray-400 rounded-lg w-full space-y-4">
                   <h1 className="text-lg">BMI Classifications</h1>
@@ -81,7 +86,7 @@ function formatNumber(num: number) {
 
 function getHealthiness(bmi: number) {
   if (bmi < 18.5) return "Underweight";
-  if (bmi >= 18.5 && bmi < 24.9) return "Normal weight";
+  if (bmi >= 18.5 && bmi < 24.9) return "Normal";
   if (bmi >= 25 && bmi < 29.9) return "Overweight";
   return "Obesity";
 }
